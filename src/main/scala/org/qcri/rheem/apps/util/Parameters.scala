@@ -1,6 +1,7 @@
 package org.qcri.rheem.apps.util
 
 import de.hpi.isg.profiledb.store.model.Experiment
+import org.qcri.rheem.apps.util.counterfeit.CounterfeitPlugin
 import org.qcri.rheem.basic.RheemBasics
 import org.qcri.rheem.core.optimizer.ProbabilisticDoubleInterval
 import org.qcri.rheem.core.plugin.{DynamicPlugin, Plugin}
@@ -18,6 +19,10 @@ object Parameters {
   private val yamlId = """yaml\((.*)\)""".r
 
   val yamlPluginHel = "yaml(<YAML plugin URL>)"
+
+  private val counterfeitId = """counterfeit\((\d+):(\d*\.\d+)\)""".r
+
+  val counterfeitPluginHel = "counterfeit(<# platforms>:<channel conversion graph density>)"
 
   private val intPattern = """[+-]?\d+""".r
 
@@ -54,6 +59,7 @@ object Parameters {
     case "sqlite3" => Sqlite3.plugin
     case "sqlite3-conversions" => Sqlite3.conversionPlugin
     case yamlId(url) => DynamicPlugin.loadYaml(url)
+    case counterfeitId(numPlatforms, ccgDensity) => new CounterfeitPlugin(numPlatforms.toInt, ccgDensity.toDouble)
     case other => throw new IllegalArgumentException(s"Could not load platform '$other'.")
   }
 
