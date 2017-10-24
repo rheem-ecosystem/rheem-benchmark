@@ -1,6 +1,7 @@
 package org.qcri.rheem.apps.util.counterfeit;
 
 import org.qcri.rheem.core.mapping.*;
+import org.qcri.rheem.core.plan.rheemplan.LoopHeadOperator;
 import org.qcri.rheem.core.plan.rheemplan.Operator;
 
 import java.util.Collection;
@@ -26,9 +27,10 @@ public class CounterfeitMapping implements Mapping {
     public CounterfeitMapping(Operator sourceOperator, CounterfeitPlatform platform) {
         SubplanPattern subplanPattern = SubplanPattern.createSingleton(new OperatorPattern<>("original", sourceOperator, false));
         ReplacementSubplanFactory replacementSubplanFactory = new ReplacementSubplanFactory.OfSingleOperators<>(
-                (match, epoch) -> new CounterfeitExecutionOperator(match, platform)
-//                        .withName(match.toString())
-                        .at(epoch)
+                (match, epoch) -> (match.isLoopHead() ?
+                        new CounterfeitLoopHeadExecutionOperator((LoopHeadOperator) match, platform) :
+                        new CounterfeitExecutionOperator(match, platform)
+                ).at(epoch)
 
         );
         PlanTransformation transformation = new PlanTransformation(

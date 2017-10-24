@@ -1,6 +1,5 @@
 package org.qcri.rheem.apps.util.counterfeit;
 
-import org.hsqldb.lib.Collection;
 import org.qcri.rheem.core.plan.rheemplan.*;
 import org.qcri.rheem.core.platform.ChannelDescriptor;
 import org.qcri.rheem.core.platform.Platform;
