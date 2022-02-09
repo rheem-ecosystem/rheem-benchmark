@@ -18,7 +18,7 @@
         <scala.compat.version>2.11</scala.compat.version>
         <spark.version>1.6.0</spark.version>
         <!-- This Hadoop version is enforced by Spark in the version that is deployed in the Maven repository via code signing. -->
-        <hadoop.version>2.2.0</hadoop.version>
+        <hadoop.version>2.10.1</hadoop.version>
         <graphchi.version>0.2.2</graphchi.version>
         <external.platforms.scope>test</external.platforms.scope>
     </properties>
